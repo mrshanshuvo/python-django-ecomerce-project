@@ -1,0 +1,38 @@
+{
+  "tabWidth": 2,
+  "printWidth": 100,
+  "useTabs": false,
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "es5",
+  "bracketSpacing": true,
+  "jsxBracketSameLine": false,
+  "arrowParens": "always",
+  "proseWrap": "always",
+  "htmlWhitespaceSensitivity": "ignore",
+  "endOfLine": "auto",
+  "overrides": [
+    {
+      "files": ["*.html", "**/templates/**/*.html"],
+      "options": {
+        "parser": "django-html",
+        "printWidth": 120,
+        "singleQuote": false,
+        "templateSingleQuote": false
+      }
+    },
+    {
+      "files": "*.js",
+      "options": {
+        "singleQuote": true
+      }
+    },
+    {
+      "files": "*.py",
+      "options": {
+        "printWidth": 88,
+        "singleQuote": true
+      }
+    }
+  ]
+}
