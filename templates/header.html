@@ -1,12 +1,37 @@
 {% load static %}
-<header>
-  <center>
-    <a href="{% url 'shop:allProdCat' %}">
+<header class="bg-white border-bottom shadow-sm py-3">
+  <div class="container d-flex justify-content-center align-items-center gap-5">
+    <a href="{% url 'shop:allProdCat' %}" class="d-flex align-items-center text-decoration-none" aria-label="AI Fashion Home">
       <img
         src="{% static 'img/logo.png' %}"
-        alt="logo image"
-        style="height: 100px; width: 162px"
+        alt="AI Fashion logo"
+        class="img-fluid rounded-circle"
+        style="max-height: 80px; transition: transform 0.3s ease, box-shadow 0.3s ease;"
       />
     </a>
-  </center>
+    <div class="d-flex flex-column">
+      <h1
+        class="mb-0 fw-semibold"
+        style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; font-size: 2rem; color: #1a73e8; letter-spacing: 0.05em;"
+      >
+        AI Fashion
+      </h1>
+      <p
+        class="mb-0 text-secondary"
+        style="font-size: 0.9rem; font-variant: small-caps; font-weight: 500; letter-spacing: 0.07em;"
+      >
+        Style Meets Technology
+      </p>
+    </div>
+  </div>
 </header>
+
+<style>
+  a:hover img {
+    transform: scale(1.08);
+    box-shadow: 0 8px 25px rgba(26, 115, 232, 0.3);
+  }
+  header {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+</style>

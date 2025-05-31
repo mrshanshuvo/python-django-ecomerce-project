@@ -1,36 +1,87 @@
-{% block title %}
-    {% if category %}
-        {{ product.name }} - Mintmade Fasion
-    {% endif %}
-{% endblock %}
-{% block content %}
-<div class="row my_prod_row_class">
-    <div  class="mx_auto">
-        <p><a href="{% url 'shop:allProdCat' %}">Home</a> | <a href="{{product.category.get_url}}">{{product.category}}</a> |{{product.name}}</p>
-    </div>
-</div>
-<div class="container">
-<br>
-<div class="row">
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12 text-center">
-        <div style="min-width:18rem">
-              <img src="{{product.image.url}}" alt="{{product.name}}">
-        </div>
-    </div>
-<div>
-    <div class="col-12 col-sm-12 col-md-12 col-lg-12">
-        <h1 class="my_prod_title">{{product.name}}</h1>
-            <p>${{product.price}}</p>
-            <p class="text-justify my_rod_text">Product Description</p>
-            <p>{{product.description}}</p>
-            {% if product.stock <= 0 %}
-            <p class="text-justify my_prod_text"><b>Out of stock</b></p>
-            {% else %}
-            <a class="btn btn-secondary" href="{% url 'cart:add_cart' product.id %}">Add to Cart</a>
-            {% endif %}
-    </div>
-</div>
+{% extends 'base.html' %}
+{% load static %}
 
+{% block title %}
+    {{ product.name }} - AI Fashion
+{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+    <!-- Breadcrumb Navigation -->
+    <div class="row my-prod-row-class">
+        <div class="col-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item">
+                        <a href="{% url 'shop:allProdCat' %}">Home</a>
+                    </li>
+                    <li class="breadcrumb-item">
+                        <a href="{{ product.category.get_url }}">{{ product.category.name }}</a>
+                    </li>
+                    <li class="breadcrumb-item active" aria-current="page">{{ product.name }}</li>
+                </ol>
+            </nav>
         </div>
+    </div>
+
+    <!-- Product Detail Section -->
+    <div class="row">
+        <!-- Product Image -->
+        <div class="col-12 col-md-6 text-center mb-4">
+            <div class="product-image-container">
+                <img src="{{ product.image.url }}" 
+                     alt="{{ product.name }}" 
+                     class="img-fluid product-detail-image"
+                     style="max-height: 400px;">
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="col-12 col-md-6">
+            <h1 class="product-title mb-3">{{ product.name }}</h1>
+            
+            <div class="product-price mb-3">
+                <span class="h4">${{ product.price }}</span>
+                {% if product.discounted_price %}
+                    <span class="text-muted ml-2"><del>${{ product.discounted_price }}</del></span>
+                {% endif %}
+            </div>
+
+            <div class="product-description mb-4">
+                <h5>Product Description</h5>
+                <p class="text-justify">{{ product.description }}</p>
+            </div>
+
+            <!-- Stock Status and Add to Cart -->
+            <div class="product-actions">
+                {% if product.stock <= 0 %}
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Out of Stock</strong>
+                    </div>
+                {% else %}
+                    <form action="{% url 'cart:add_cart' product.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="form-group mb-3">
+                            <label for="quantity">Quantity:</label>
+                            <input type="number" 
+                                   name="quantity" 
+                                   id="quantity" 
+                                   value="1" 
+                                   min="1" 
+                                   max="{{ product.stock }}"
+                                   class="form-control" 
+                                   style="width: 80px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fas fa-cart-plus"></i> Add to Cart
+                        </button>
+                    </form>
+                    <small class="text-muted d-block mt-2">
+                        {{ product.stock }} items available
+                    </small>
+                {% endif %}
+            </div>
+        </div>
+    </div>
 </div>
 {% endblock %}
